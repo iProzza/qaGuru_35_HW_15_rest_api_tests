@@ -30,14 +30,25 @@ public class Requests extends BaseTest {
                 .post(USERS_PATH);
     }
 
-    public static Response updateUser(int userId, String name, String job) {
+    public static Response updateUserFromPatchMethod(int userId, String name, String job) {
         return given()
                 .header("x-api-key", API_KEY)
                 .contentType(ContentType.JSON)
                 .pathParam("id", userId)
                 .body(String.format("{\"name\": \"%s\", \"job\": \"%s\"}", name, job))
                 .when()
+                .log().body()
                 .patch(USER_BY_ID_PATH);
+    }
+
+    public static Response updateUserFromPutMethod(int userId, String name, String job) {
+        return given()
+                .header("x-api-key", API_KEY)
+                .contentType(ContentType.JSON)
+                .pathParam("id", userId)
+                .body(String.format("{\"name\": \"%s\", \"job\": \"%s\"}", name, job))
+                .when()
+                .put(USER_BY_ID_PATH);
     }
 
     public static Response deleteUser(int userId) {

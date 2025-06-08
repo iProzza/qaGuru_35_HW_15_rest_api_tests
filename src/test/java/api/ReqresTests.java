@@ -42,8 +42,18 @@ public class ReqresTests extends BaseTest {
 
     @Test
     @DisplayName("Проверка изменения полей у пользователя")
-    void updateUserTest() {
-        Response response = Requests.updateUser(2, "neo", "the one");
+    void updateUserPatchMethodTest() {
+        Response response = Requests.updateUserFromPatchMethod(2, "neo", "the one");
+
+        assertEquals(200, response.statusCode());
+        assertEquals("neo", response.jsonPath().getString("name"));
+        assertEquals("the one", response.jsonPath().getString("job"));
+    }
+
+    @Test
+    @DisplayName("Проверка изменения полей у пользователя")
+    void updateUserPutMethodTest() {
+        Response response = Requests.updateUserFromPutMethod(2, "neo", "the one");
 
         assertEquals(200, response.statusCode());
         assertEquals("neo", response.jsonPath().getString("name"));
