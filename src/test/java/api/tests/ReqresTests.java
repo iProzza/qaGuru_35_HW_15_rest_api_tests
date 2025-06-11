@@ -23,7 +23,7 @@ public class ReqresTests extends BaseTest {
                         .when()
                         .get(USERS_PATH)
                         .then()
-                        .statusCode(200)
+                        .spec(updateUserResponseSpec)
                         .extract()
                         .as(ListUsersResponseModel.class));
 
@@ -45,7 +45,7 @@ public class ReqresTests extends BaseTest {
                         .when()
                         .get(USER_BY_ID_PATH)
                         .then()
-                        .statusCode(200)
+                        .spec(updateUserResponseSpec)
                         .extract()
                         .as(SingleUserResponseModel.class));
 
