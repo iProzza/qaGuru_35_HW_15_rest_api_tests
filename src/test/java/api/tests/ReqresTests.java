@@ -7,10 +7,10 @@ import api.models.crudUserResponseModel;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static api.specs.UsersSpecs.*;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
-import io.restassured.http.ContentType;
 
 public class ReqresTests extends BaseTest {
 
@@ -68,14 +68,12 @@ public class ReqresTests extends BaseTest {
                         .build());
 
         crudUserResponseModel response = step("Create user", () ->
-                given()
-                        .header("x-api-key", API_KEY)
-                        .contentType(ContentType.JSON)
+                given(crudUserRequestSpec)
                         .body(request)
                         .when()
                         .post(USERS_PATH)
                         .then()
-                        .statusCode(201)
+                        .spec(createUserResponseSpec)
                         .extract()
                         .as(crudUserResponseModel.class));
 
@@ -101,15 +99,13 @@ public class ReqresTests extends BaseTest {
                         .build());
 
         crudUserResponseModel response = step("Update user with PATCH", () ->
-                given()
-                        .header("x-api-key", API_KEY)
-                        .contentType(ContentType.JSON)
+                given(crudUserRequestSpec)
                         .pathParam("id", 2)
                         .body(request)
                         .when()
                         .patch(USER_BY_ID_PATH)
                         .then()
-                        .statusCode(200)
+                        .spec(updateUserResponseSpec)
                         .extract()
                         .as(crudUserResponseModel.class));
 
@@ -129,15 +125,13 @@ public class ReqresTests extends BaseTest {
                         .build());
 
         crudUserResponseModel response = step("Update user with PUT", () ->
-                given()
-                        .header("x-api-key", API_KEY)
-                        .contentType(ContentType.JSON)
+                given(crudUserRequestSpec)
                         .pathParam("id", 2)
                         .body(request)
                         .when()
                         .put(USER_BY_ID_PATH)
                         .then()
-                        .statusCode(200)
+                        .spec(updateUserResponseSpec)
                         .extract()
                         .as(crudUserResponseModel.class));
 
@@ -151,12 +145,11 @@ public class ReqresTests extends BaseTest {
     @DisplayName("Удаление пользователя")
     void deleteUserTest() {
         step("Delete user", () ->
-                given()
-                        .header("x-api-key", API_KEY)
+                given(crudUserRequestSpec)
                         .pathParam("id", 2)
                         .when()
                         .delete(USER_BY_ID_PATH)
                         .then()
-                        .statusCode(204));
+                        .spec(deleteUserResponseSpec));
     }
 }

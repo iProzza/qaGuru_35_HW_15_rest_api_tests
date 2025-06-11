@@ -13,16 +13,13 @@ import static io.restassured.http.ContentType.JSON;
 
 public class UsersSpecs extends BaseTest {
 
-//    public static RequestSpecification UserRequestSpec = with()
-//            .filter(withCustomTemplates())
-//            .log().uri()
-//            .log().body()
-//            .log().headers()
-//            .header("x-api-key", API_KEY)
-//            .contentType(JSON)
-//            .baseUri(BASE_URI)
-//            .basePath(SINGLE_USER_PATH + "{userId}");
-
+    public static RequestSpecification crudUserRequestSpec = with()
+            .filter(withCustomTemplates())
+            .log().uri()
+            .log().body()
+            .log().headers()
+            .header("x-api-key", API_KEY)
+            .contentType(JSON);
 
     public static ResponseSpecification createUserResponseSpec = new ResponseSpecBuilder()
             .expectStatusCode(201)
