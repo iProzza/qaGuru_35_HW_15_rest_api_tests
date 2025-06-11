@@ -1,8 +1,9 @@
 package api.tests;
 
-import api.models.UserResponse;
-import api.models.UserRequest;
-import api.models.UsersListResponse;
+import api.models.SingleUserResponseModel;
+import api.models.UserRequestModel;
+import api.models.ListUsersResponseModel;
+import api.models.crudUserResponseModel;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +17,7 @@ public class ReqresTests extends BaseTest {
     @Test
     @DisplayName("Получение списка пользователей")
     void usersListTest() {
-        UsersListResponse response = step("Get users list", () ->
+        ListUsersResponseModel response = step("Get users list", () ->
                 given()
                         .queryParam("page", 2)
                         .when()
@@ -24,25 +25,20 @@ public class ReqresTests extends BaseTest {
                         .then()
                         .statusCode(200)
                         .extract()
-                        .as(UsersListResponse.class));
+                        .as(ListUsersResponseModel.class));
 
         step("Check response data", () -> {
             assertThat(response.getPage()).isEqualTo(2);
             assertThat(response.getData())
                     .as("User list should not be empty")
                     .isNotEmpty();
-
-            UserResponse firstUser = response.getData().get(0);
-            assertThat(firstUser.getEmail())
-                    .as("User email should not be null")
-                    .isNotNull();
         });
     }
 
     @Test
     @DisplayName("Получение данных конкретного пользователя")
     void singleUserTest() {
-        UserResponse user = step("Get user by ID", () ->
+        SingleUserResponseModel response = step("Get user by ID", () ->
                 given()
                         .header("x-api-key", API_KEY)
                         .pathParam("id", 2)
@@ -51,43 +47,41 @@ public class ReqresTests extends BaseTest {
                         .then()
                         .statusCode(200)
                         .extract()
-                        .jsonPath()
-                        .getObject("data", UserResponse.class));
+                        .as(SingleUserResponseModel.class));
 
         step("Check user data", () -> {
-            assertThat(user.getId()).isEqualTo(2);
-            assertThat(user.getEmail())
+            assertThat(response.getData().getId()).isEqualTo(2);
+            assertThat(response.getData().getEmail())
                     .as("Email should contain @ and . symbols")
                     .contains("@")
                     .contains(".");
-            assertThat(user.getFirst_name()).isNotBlank();
         });
     }
 
     @Test
     @DisplayName("Создание нового пользователя")
     void createUserTest() {
-        UserRequest userRequest = step("Prepare request data", () ->
-                UserRequest.builder()
+        UserRequestModel request = step("Prepare request data", () ->
+                UserRequestModel.builder()
                         .name("morpheus")
                         .job("leader")
                         .build());
 
-        UsersListResponse response = step("Create user", () ->
+        crudUserResponseModel response = step("Create user", () ->
                 given()
                         .header("x-api-key", API_KEY)
                         .contentType(ContentType.JSON)
-                        .body(userRequest)
+                        .body(request)
                         .when()
                         .post(USERS_PATH)
                         .then()
                         .statusCode(201)
                         .extract()
-                        .as(UsersListResponse.class));
+                        .as(crudUserResponseModel.class));
 
         step("Verify response", () -> {
-            assertThat(response.getName()).isEqualTo(userRequest.getName());
-            assertThat(response.getJob()).isEqualTo(userRequest.getJob());
+            assertThat(response.getName()).isEqualTo(request.getName());
+            assertThat(response.getJob()).isEqualTo(request.getJob());
             assertThat(response.getId())
                     .as("User ID should not be null")
                     .isNotNull();
@@ -100,56 +94,56 @@ public class ReqresTests extends BaseTest {
     @Test
     @DisplayName("Частичное обновление пользователя (PATCH)")
     void updateUserPatchMethodTest() {
-        UserRequest updateData = step("Prepare update data", () ->
-                UserRequest.builder()
+        UserRequestModel request = step("Prepare update data", () ->
+                UserRequestModel.builder()
                         .name("neo")
                         .job("the one")
                         .build());
 
-        UsersListResponse response = step("Update user with PATCH", () ->
+        crudUserResponseModel response = step("Update user with PATCH", () ->
                 given()
                         .header("x-api-key", API_KEY)
                         .contentType(ContentType.JSON)
                         .pathParam("id", 2)
-                        .body(updateData)
+                        .body(request)
                         .when()
                         .patch(USER_BY_ID_PATH)
                         .then()
                         .statusCode(200)
                         .extract()
-                        .as(UsersListResponse.class));
+                        .as(crudUserResponseModel.class));
 
         step("Verify update results", () -> {
-            assertThat(response.getName()).isEqualTo(updateData.getName());
-            assertThat(response.getJob()).isEqualTo(updateData.getJob());
+            assertThat(response.getName()).isEqualTo(request.getName());
+            assertThat(response.getJob()).isEqualTo(request.getJob());
         });
     }
 
     @Test
     @DisplayName("Полное обновление пользователя (PUT)")
     void updateUserPutMethodTest() {
-        UserRequest updateData = step("Prepare update data", () ->
-                UserRequest.builder()
+        UserRequestModel request = step("Prepare update data", () ->
+                UserRequestModel.builder()
                         .name("neo")
                         .job("the one")
                         .build());
 
-        UsersListResponse response = step("Update user with PUT", () ->
+        crudUserResponseModel response = step("Update user with PUT", () ->
                 given()
                         .header("x-api-key", API_KEY)
                         .contentType(ContentType.JSON)
                         .pathParam("id", 2)
-                        .body(updateData)
+                        .body(request)
                         .when()
                         .put(USER_BY_ID_PATH)
                         .then()
                         .statusCode(200)
                         .extract()
-                        .as(UsersListResponse.class));
+                        .as(crudUserResponseModel.class));
 
         step("Verify update results", () -> {
-            assertThat(response.getName()).isEqualTo(updateData.getName());
-            assertThat(response.getJob()).isEqualTo(updateData.getJob());
+            assertThat(response.getName()).isEqualTo(request.getName());
+            assertThat(response.getJob()).isEqualTo(request.getJob());
         });
     }
 

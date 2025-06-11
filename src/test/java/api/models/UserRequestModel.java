@@ -5,8 +5,6 @@ import lombok.Data;
 
 @Data
 @Builder
-public class UserRequest {
-    private String name;
-    private String job;
-
+public class UserRequestModel {
+    String name, job;
 }

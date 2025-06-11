@@ -13,26 +13,32 @@ import static io.restassured.http.ContentType.JSON;
 
 public class UsersSpecs extends BaseTest {
 
-    public static RequestSpecification UserRequestSpec = with()
-            .filter(withCustomTemplates())
-            .log().uri()
-            .log().body()
-            .log().headers()
-            .header("x-api-key", API_KEY)
-            .contentType(JSON)
-            .baseUri(BASE_URI)
-            .basePath(SINGLE_USER_PATH + "{userId}");
+//    public static RequestSpecification UserRequestSpec = with()
+//            .filter(withCustomTemplates())
+//            .log().uri()
+//            .log().body()
+//            .log().headers()
+//            .header("x-api-key", API_KEY)
+//            .contentType(JSON)
+//            .baseUri(BASE_URI)
+//            .basePath(SINGLE_USER_PATH + "{userId}");
 
-    public static ResponseSpecification usersListResponseSpec = new ResponseSpecBuilder()
+
+    public static ResponseSpecification createUserResponseSpec = new ResponseSpecBuilder()
+            .expectStatusCode(201)
+            .log(STATUS)
+            .log(BODY)
+            .build();
+
+    public static ResponseSpecification updateUserResponseSpec = new ResponseSpecBuilder()
             .expectStatusCode(200)
             .log(STATUS)
             .log(BODY)
             .build();
 
-    public static ResponseSpecification userResponseSpec = new ResponseSpecBuilder()
-            .expectStatusCode(404)
+    public static ResponseSpecification deleteUserResponseSpec = new ResponseSpecBuilder()
+            .expectStatusCode(204)
             .log(STATUS)
-            .log(BODY)
             .build();
 
 }
