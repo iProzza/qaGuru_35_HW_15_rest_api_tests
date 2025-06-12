@@ -26,7 +26,7 @@ public class ReqresTests extends BaseTest {
                         .when()
                         .get(USERS_PATH)
                         .then()
-                        .spec(updateUserResponseSpec)
+                        .spec(updateUserResponseSpec200)
                         .extract()
                         .as(ListUsersResponseModel.class));
 
@@ -48,7 +48,7 @@ public class ReqresTests extends BaseTest {
                         .when()
                         .get(USER_BY_ID_PATH)
                         .then()
-                        .spec(updateUserResponseSpec)
+                        .spec(updateUserResponseSpec200)
                         .extract()
                         .as(SingleUserResponseModel.class));
 
@@ -76,7 +76,7 @@ public class ReqresTests extends BaseTest {
                         .when()
                         .post(USERS_PATH)
                         .then()
-                        .spec(createUserResponseSpec)
+                        .spec(createUserResponseSpec201)
                         .extract()
                         .as(crudUserResponseModel.class));
 
@@ -108,7 +108,7 @@ public class ReqresTests extends BaseTest {
                         .when()
                         .patch(USER_BY_ID_PATH)
                         .then()
-                        .spec(updateUserResponseSpec)
+                        .spec(updateUserResponseSpec200)
                         .extract()
                         .as(crudUserResponseModel.class));
 
@@ -134,7 +134,7 @@ public class ReqresTests extends BaseTest {
                         .when()
                         .put(USER_BY_ID_PATH)
                         .then()
-                        .spec(updateUserResponseSpec)
+                        .spec(updateUserResponseSpec200)
                         .extract()
                         .as(crudUserResponseModel.class));
 
@@ -153,6 +153,6 @@ public class ReqresTests extends BaseTest {
                         .when()
                         .delete(USER_BY_ID_PATH)
                         .then()
-                        .spec(deleteUserResponseSpec));
+                        .spec(deleteUserResponseSpec204));
     }
 }

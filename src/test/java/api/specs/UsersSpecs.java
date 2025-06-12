@@ -15,25 +15,23 @@ public class UsersSpecs extends BaseTest {
 
     public static RequestSpecification crudUserRequestSpec = with()
             .filter(withCustomTemplates())
-            .log().uri()
-            .log().body()
-            .log().headers()
+            .log().all()
             .header("x-api-key", API_KEY)
             .contentType(JSON);
 
-    public static ResponseSpecification createUserResponseSpec = new ResponseSpecBuilder()
+    public static ResponseSpecification createUserResponseSpec201 = new ResponseSpecBuilder()
             .expectStatusCode(201)
             .log(STATUS)
             .log(BODY)
             .build();
 
-    public static ResponseSpecification updateUserResponseSpec = new ResponseSpecBuilder()
+    public static ResponseSpecification updateUserResponseSpec200 = new ResponseSpecBuilder()
             .expectStatusCode(200)
             .log(STATUS)
             .log(BODY)
             .build();
 
-    public static ResponseSpecification deleteUserResponseSpec = new ResponseSpecBuilder()
+    public static ResponseSpecification deleteUserResponseSpec204 = new ResponseSpecBuilder()
             .expectStatusCode(204)
             .log(STATUS)
             .build();
