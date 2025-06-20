@@ -8,7 +8,8 @@ repositories {
     mavenCentral()
 }
 
-def restAssuredVersion = "5.4.0",
+def selenideVersion = "7.7.3",
+    restAssuredVersion = "5.4.0",
     allureVersion = "2.21.0",
     junitVersion = "5.10.1",
     jacksonVersion = "2.16.1"
@@ -29,6 +30,7 @@ allure {
 
 dependencies {
     testImplementation(
+            "com.codeborne:selenide:$selenideVersion",
             "io.rest-assured:rest-assured:$restAssuredVersion",
             "io.rest-assured:json-schema-validator:$restAssuredVersion",
             "io.qameta.allure:allure-rest-assured:$allureVersion",
