@@ -1,17 +1,12 @@
-package api.tests;
+package demoqa.tests;
 
-import api.models.SingleUserResponseModel;
-import api.models.UserRequestModel;
-import api.models.ListUsersResponseModel;
-import api.models.crudUserResponseModel;
+import demoqa.pages.ProfilePage;
 import org.openqa.selenium.Cookie;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import static api.helpers.TestData.*;
-import static api.specs.UsersSpecs.*;
+import static demoqa.helpers.TestData.*;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
@@ -26,9 +21,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Tag("all_api")
 public class ProfileDemoQaTests extends BaseTest {
 
+    ProfilePage profilePage = new ProfilePage();
 
     @Test
-    void addBookToCollection_withDelete1Book_Test() {
+    void deleteBookFromCollectionTest() {
         String authData = "{\"userName\":\"" + login + "\",\"password\":\"" + password + "\"}";
 
         Response authResponse = given()
@@ -73,7 +69,7 @@ public class ProfileDemoQaTests extends BaseTest {
                 .header("Authorization", "Bearer " + authResponse.path("token"))
                 .body(bookData)
                 .when()
-                .post("/BookStore/v1/Books")
+                .post(BOOKSTORE_BOOKS)
                 .then()
                 .log().status()
                 .log().body()
@@ -85,7 +81,13 @@ public class ProfileDemoQaTests extends BaseTest {
         getWebDriver().manage().addCookie(new Cookie("token", authResponse.path("token")));
 
         open("/profile");
-        $(".ReactTable").shouldHave(text("Speaking JavaScript"));
+        $(".ReactTable").shouldHave(text("Git Pocket Guide"));
+
+
+        //Удаляем книгу на UI
+        profilePage.clickDeleteBtn();
+
+
     }
 
 

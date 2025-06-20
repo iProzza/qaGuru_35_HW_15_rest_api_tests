@@ -1,4 +1,4 @@
-package api.helpers;
+package demoqa.helpers;
 
 public class TestData {
     public static String login = "test_iProzza_035",

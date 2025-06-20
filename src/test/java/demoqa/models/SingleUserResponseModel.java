@@ -1,21 +1,16 @@
-package api.models;
+package demoqa.models;
 
 import lombok.Data;
 
-import java.util.List;
-
 @Data
-public class ListUsersResponseModel {
-    int page;
-    int per_page;
-    int total;
-    int total_pages;
-    List<UserResponseModel> data;
+public class SingleUserResponseModel {
 
-    private Support support;
+
+    Data data;
+    Support support;
 
     @lombok.Data
-    public static class UserResponseModel {
+    public static class Data {
         private Integer id;
         private String email;
         private String first_name;
@@ -28,7 +23,4 @@ public class ListUsersResponseModel {
         private String url;
         private String text;
     }
-
-
-
 }

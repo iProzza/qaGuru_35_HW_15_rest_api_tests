@@ -1,10 +1,10 @@
-package api.specs;
+package demoqa.specs;
 
-import api.tests.BaseTest;
+import demoqa.tests.BaseTest;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
-import static api.helpers.CustomAllureListener.withCustomTemplates;
+import static demoqa.helpers.CustomAllureListener.withCustomTemplates;
 
 import static io.restassured.RestAssured.with;
 import static io.restassured.filter.log.LogDetail.BODY;

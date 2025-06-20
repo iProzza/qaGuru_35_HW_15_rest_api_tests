@@ -37,6 +37,7 @@ dependencies {
             "org.junit.jupiter:junit-jupiter:$junitVersion",
             'org.slf4j:slf4j-simple:2.0.9',
             'org.assertj:assertj-core:3.24.2',
+            'io.github.bonigarcia:webdrivermanager:5.8.0',
 
             "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion",
             "com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion",
