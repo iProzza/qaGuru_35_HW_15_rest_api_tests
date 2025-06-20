@@ -45,12 +45,7 @@ public class ProfileDemoQaTests extends BaseTest {
                 .statusCode(200)
                 .extract().response();
 
-
-
-
-        String isbn = "9781449325862";
-        String deleteBookData = format("{\"userId\":\"%s\",\"isbn\":\"%s\"}",
-                authResponse.path("userId") , isbn);
+        String userId = authResponse.path("userId");
 
         given()
                 .log().uri()
@@ -58,14 +53,15 @@ public class ProfileDemoQaTests extends BaseTest {
                 .log().body()
                 .contentType(JSON)
                 .header("Authorization", "Bearer " + authResponse.path("token"))
-                .body(deleteBookData)
+                .queryParam("UserId", userId)
                 .when()
-                .delete("/BookStore/v1/Book")
+                .delete(BOOKSTORE_BOOKS)
                 .then()
                 .log().status()
                 .log().body()
                 .statusCode(204);
 
+        String isbn = "9781449325862";
         String bookData = format("{\"userId\":\"%s\",\"collectionOfIsbns\":[{\"isbn\":\"%s\"}]}",
                 authResponse.path("userId") , isbn);
 

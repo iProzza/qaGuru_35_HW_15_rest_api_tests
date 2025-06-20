@@ -6,7 +6,6 @@ import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import static api.helpers.CustomAllureListener.withCustomTemplates;
 
-import static api.helpers.TestData.API_KEY;
 import static io.restassured.RestAssured.with;
 import static io.restassured.filter.log.LogDetail.BODY;
 import static io.restassured.filter.log.LogDetail.STATUS;
@@ -17,7 +16,7 @@ public class UsersSpecs extends BaseTest {
     public static RequestSpecification crudUserRequestSpec = with()
             .filter(withCustomTemplates())
             .log().all()
-            .header("x-api-key", API_KEY)
+//            .header("x-api-key", API_KEY)
             .contentType(JSON);
 
     public static ResponseSpecification createUserResponseSpec201 = new ResponseSpecBuilder()
