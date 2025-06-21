@@ -2,7 +2,7 @@ package demoqa.api.requests.authorization;
 import lombok.Data;
 
 @Data
-public class AuthResponseModel {
+public class AuthResponseDto {
     private String userId;
     private String username;
     private String password;

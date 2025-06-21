@@ -10,7 +10,7 @@ import static io.restassured.http.ContentType.JSON;
 public class AuthorizationApi {
 
     //Логинимся через апи
-    public AuthResponseModel authorize() {
+    public static AuthResponseDto authorize() {
         String authData = "{\"userName\":\"" + LOGIN + "\",\"password\":\"" + PASSWORD + "\"}";
         return given()
                 .log().uri()
@@ -25,6 +25,6 @@ public class AuthorizationApi {
                 .log().body()
                 .statusCode(200)
                 .extract()
-                .as(AuthResponseModel.class);
+                .as(AuthResponseDto.class);
     }
 }
