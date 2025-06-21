@@ -22,17 +22,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Tag("all_api")
 public class ProfileDemoQaTests extends BaseTest {
 
+    AuthorizationApi authorizationApi = new AuthorizationApi();
     ProfilePage profilePage = new ProfilePage();
     ModalPage modalPage = new ModalPage();
 
     @Test
     void deleteBookFromCollectionTest() {
         //Авторизуемся через API
-        AuthResponseModel authResponseModel = AuthorizationApi.authorization();
+        AuthResponseModel authResponseModel = authorizationApi.authorize();
 
         //Удаляем все книги из списка
         String userId = authResponseModel.getUserId();
 
+        //TODO Чот у метода пустое тело в ответе, а должно вроде быть(судя по сваггеру), в девтулз оно пустое, надо проверить, как будто не удаляет метод книги
         given()
                 .log().uri()
                 .log().method()
@@ -66,7 +68,7 @@ public class ProfileDemoQaTests extends BaseTest {
                 .log().body()
                 .statusCode(201);
 
-        //когда есть книга в списке, картинки этой нет, но я удаляю все книги из списка, но как будто UI это не понимаем, нужна пауза какая-то
+        //когда есть книга в списке, картинки этой нет(но удаление всех книг вроде как происходит), но как будто UI это не понимаем, нужна пауза какая-то
         open("/favicon.ico");
         getWebDriver().manage().addCookie(new Cookie("userID", authResponseModel.getUserId()));
         getWebDriver().manage().addCookie(new Cookie("expires", authResponseModel.getExpires()));

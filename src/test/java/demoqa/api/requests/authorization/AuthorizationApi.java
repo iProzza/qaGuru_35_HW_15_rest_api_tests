@@ -10,7 +10,7 @@ import static io.restassured.http.ContentType.JSON;
 public class AuthorizationApi {
 
     //Логинимся через апи
-    public static AuthResponseModel authorization() {
+    public AuthResponseModel authorize() {
         String authData = "{\"userName\":\"" + LOGIN + "\",\"password\":\"" + PASSWORD + "\"}";
         return given()
                 .log().uri()
