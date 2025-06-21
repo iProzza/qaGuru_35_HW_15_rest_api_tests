@@ -1,4 +1,4 @@
-package demoqa.models;
+package demoqa.api.models;
 
 import lombok.Builder;
 import lombok.Data;

@@ -1,14 +1,14 @@
 package demoqa.tests;
 
+import demoqa.api.requests.authorization.AuthResponseModel;
+import demoqa.api.requests.authorization.AuthorizationApi;
 import demoqa.pages.ModalPage;
 import demoqa.pages.ProfilePage;
 import org.openqa.selenium.Cookie;
-import io.restassured.response.Response;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import static demoqa.helpers.TestData.*;
-import static com.codeborne.selenide.Condition.text;
+import static demoqa.api.endpoints.EndPoints.*;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
@@ -27,32 +27,18 @@ public class ProfileDemoQaTests extends BaseTest {
 
     @Test
     void deleteBookFromCollectionTest() {
-        String authData = "{\"userName\":\"" + login + "\",\"password\":\"" + password + "\"}";
-
-        //Логинимся через апи
-        Response authResponse = given()
-                .log().uri()
-                .log().method()
-                .log().body()
-                .contentType(JSON)
-                .body(authData)
-                .when()
-                .post(ACCOUNT_LOGIN)
-                .then()
-                .log().status()
-                .log().body()
-                .statusCode(200)
-                .extract().response();
+        //Авторизуемся через API
+        AuthResponseModel authResponseModel = AuthorizationApi.authorization();
 
         //Удаляем все книги из списка
-        String userId = authResponse.path("userId");
+        String userId = authResponseModel.getUserId();
 
         given()
                 .log().uri()
                 .log().method()
                 .log().body()
                 .contentType(JSON)
-                .header("Authorization", "Bearer " + authResponse.path("token"))
+                .header("Authorization", "Bearer " + authResponseModel.getToken())
                 .queryParam("UserId", userId)
                 .when()
                 .delete(BOOKSTORE_BOOKS)
@@ -64,14 +50,14 @@ public class ProfileDemoQaTests extends BaseTest {
         //Добавляем одну книгу isbn
         String isbn = "9781449325862";
         String bookData = format("{\"userId\":\"%s\",\"collectionOfIsbns\":[{\"isbn\":\"%s\"}]}",
-                authResponse.path("userId") , isbn);
+                authResponseModel.getUserId() , isbn);
 
         given()
                 .log().uri()
                 .log().method()
                 .log().body()
                 .contentType(JSON)
-                .header("Authorization", "Bearer " + authResponse.path("token"))
+                .header("Authorization", "Bearer " + authResponseModel.getToken())
                 .body(bookData)
                 .when()
                 .post(BOOKSTORE_BOOKS)
@@ -82,24 +68,21 @@ public class ProfileDemoQaTests extends BaseTest {
 
         //когда есть книга в списке, картинки этой нет, но я удаляю все книги из списка, но как будто UI это не понимаем, нужна пауза какая-то
         open("/favicon.ico");
-        getWebDriver().manage().addCookie(new Cookie("userID", authResponse.path("userId")));
-        getWebDriver().manage().addCookie(new Cookie("expires", authResponse.path("expires")));
-        getWebDriver().manage().addCookie(new Cookie("token", authResponse.path("token")));
+        getWebDriver().manage().addCookie(new Cookie("userID", authResponseModel.getUserId()));
+        getWebDriver().manage().addCookie(new Cookie("expires", authResponseModel.getExpires()));
+        getWebDriver().manage().addCookie(new Cookie("token", authResponseModel.getToken()));
 
         //Проверяем, что книга добавилась в список
         open("/profile");
-        //Спрятать в класс какой-то, мб проверок каких то
-        $(".ReactTable").shouldHave(text("Git Pocket Guide"));
+        profilePage.bookShouldHaveTitle("Git Pocket Guide");
 
 
         //Удаляем книгу на UI
         profilePage.clickDeleteBtn();
         modalPage.clickOkBtn();
-        System.out.println("Мы тут");
 
         //Проверяем, что книги нет в списке
-        //Спрятать в класс какой-то, мб проверок каких то
-        $(".ReactTable").shouldNotHave(text("Git Pocket Guide"));
+        profilePage.noRowsFoundMsgIsVisible();
 
 
         //Проверяем, что книга удалилась из списка через API
@@ -109,7 +92,7 @@ public class ProfileDemoQaTests extends BaseTest {
                 .log().method()
                 .log().body()
                 .contentType(JSON)
-                .header("Authorization", "Bearer " + authResponse.path("token"))
+                .header("Authorization", "Bearer " + authResponseModel.getToken())
                 .queryParam("UserId", userId)
                 .when()
                 .get(ACCOUNT_USER + "/" + userId)
@@ -119,7 +102,6 @@ public class ProfileDemoQaTests extends BaseTest {
                 .statusCode(200)
                 .extract().response();
 
-
-
+        //Проверка, что книг нет через апи
     }
 }

@@ -1,4 +1,4 @@
-package demoqa.specs;
+package demoqa.api.specs;
 
 import demoqa.tests.BaseTest;
 import io.restassured.builder.ResponseSpecBuilder;
