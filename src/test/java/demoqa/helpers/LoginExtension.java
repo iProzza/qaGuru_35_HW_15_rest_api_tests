@@ -25,7 +25,7 @@ public class LoginExtension implements BeforeEachCallback {
     private void authorizeAndSetCookies() {
         AuthResponseDto auth = AuthorizationApi.authorize();
 
-        open("/favicon.ico"); // Открываем любую страницу для установки cookies
+        open("/favicon.ico"); 
 
         getWebDriver().manage().addCookie(new Cookie("userID", auth.getUserId()));
         getWebDriver().manage().addCookie(new Cookie("token", auth.getToken()));

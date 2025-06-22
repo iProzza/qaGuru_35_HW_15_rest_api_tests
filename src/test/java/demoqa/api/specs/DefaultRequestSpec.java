@@ -9,7 +9,6 @@ import static io.restassured.http.ContentType.JSON;
 
 public class DefaultRequestSpec {
 
-    //TODO при таком исполнении, Все работает, но ходит за токеном при каждом использовании(в каждом запросе где используется)
     protected static RequestSpecification defaultRequestSpec() {
         return new RequestSpecBuilder()
                 .setContentType(JSON)

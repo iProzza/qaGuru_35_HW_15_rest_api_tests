@@ -3,13 +3,16 @@ package demoqa.api.requests.crud;
 import demoqa.api.specs.DefaultRequestSpec;
 
 import static demoqa.api.endpoints.EndPoints.ACCOUNT_USER;
+import static demoqa.api.endpoints.EndPoints.BOOKSTORE_BOOKS;
 import static demoqa.api.specs.CrudResponseSpecs.*;
 import static io.restassured.RestAssured.given;
-import static demoqa.api.endpoints.EndPoints.BOOKSTORE_BOOKS;
+import static java.lang.String.format;
 
 public class Requests extends DefaultRequestSpec {
 
-    public void addBookToProfile(String bookData) {
+    public void addBookToProfile(String userId, String isbn) {
+        String bookData = format("{\"userId\":\"%s\",\"collectionOfIsbns\":[{\"isbn\":\"%s\"}]}",
+                userId , isbn);
         given()
                 .spec(defaultRequestSpec())
                 .body(bookData)
