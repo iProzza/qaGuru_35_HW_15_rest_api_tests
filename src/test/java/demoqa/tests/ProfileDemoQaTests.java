@@ -4,6 +4,7 @@ import demoqa.api.requests.authorization.AuthResponseDto;
 import demoqa.api.requests.authorization.AuthorizationApi;
 import demoqa.api.requests.crud.GetAccountUserBooksByIdResponseDto;
 import demoqa.api.requests.crud.Requests;
+import demoqa.helpers.WithLogin;
 import demoqa.pages.ModalPage;
 import demoqa.pages.ProfilePage;
 import org.junit.jupiter.api.DisplayName;
@@ -25,9 +26,14 @@ public class ProfileDemoQaTests extends BaseTest {
     ModalPage modalPage = new ModalPage();
     Requests requests = new Requests();
 
+    //TODO проблема в том, что запрос к логину идет при каждом апи запросе - наверное это неоч!!!!!
+    //TODO сделать steps
+    //TODO убрать bookData внутрь addBookToProfile, а через аргуменнты передавать isbn и userId
+
     @Test
-    @DisplayName("Удлание книг из профиля")
-    void deleteBookFromProfileTest() {
+    @WithLogin
+    @DisplayName("Проверка отображения пустого списка, после удаления книг")
+    void shouldDisplayEmptyBookListAfterDeletionTest() {
         //Авторизуемся через API
         AuthResponseDto authResponseModel = AuthorizationApi.authorize();
 
@@ -41,13 +47,6 @@ public class ProfileDemoQaTests extends BaseTest {
         String bookData = format("{\"userId\":\"%s\",\"collectionOfIsbns\":[{\"isbn\":\"%s\"}]}",
                 userId , isbn);
         requests.addBookToProfile(bookData);
-
-
-        //когда есть книга в списке изначально и мы её по апи удаляем, то картинки этой нет, как будто UI не успевает, нужна пауза какая-то
-        open("/favicon.ico");
-        getWebDriver().manage().addCookie(new Cookie("userID", authResponseModel.getUserId()));
-        getWebDriver().manage().addCookie(new Cookie("expires", authResponseModel.getExpires()));
-        getWebDriver().manage().addCookie(new Cookie("token", authResponseModel.getToken()));
 
         //Проверяем, что книга добавилась в список
         open("/profile");

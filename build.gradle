@@ -12,7 +12,8 @@ def selenideVersion = "7.7.3",
     restAssuredVersion = "5.4.0",
     allureVersion = "2.21.0",
     junitVersion = "5.10.1",
-    jacksonVersion = "2.16.1"
+    jacksonVersion = "2.16.1",
+    aspectjweaverVersion = '1.9.20.1'
 
 allure {
     report {
@@ -35,6 +36,7 @@ dependencies {
             "io.rest-assured:json-schema-validator:$restAssuredVersion",
             "io.qameta.allure:allure-rest-assured:$allureVersion",
             "org.junit.jupiter:junit-jupiter:$junitVersion",
+            "org.aspectj:aspectjweaver:$aspectjweaverVersion",
             'org.slf4j:slf4j-simple:2.0.9',
             'org.assertj:assertj-core:3.24.2',
             'io.github.bonigarcia:webdrivermanager:5.8.0',
