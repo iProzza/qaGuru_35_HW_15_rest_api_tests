@@ -2,9 +2,7 @@ package demoqa.tests;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.selenide.AllureSelenide;
-import io.restassured.RestAssured;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,10 +19,6 @@ public class BaseTest {
 
     @BeforeAll
     static void setup() {
-//        WebDriverManager.chromedriver()
-//                .clearDriverCache()
-//                .clearResolutionCache()
-//                .setup();
 
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.browserSize = System.getProperty("screenResolution", "1920x1080");
