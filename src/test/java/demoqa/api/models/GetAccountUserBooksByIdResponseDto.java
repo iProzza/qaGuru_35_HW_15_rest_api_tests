@@ -1,4 +1,4 @@
-package demoqa.api.requests.crud;
+package demoqa.api.models;
 
 import lombok.Data;
 

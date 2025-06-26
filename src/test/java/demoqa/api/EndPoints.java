@@ -1,4 +1,4 @@
-package demoqa.api.endpoints;
+package demoqa.api;
 
 public class EndPoints {
 

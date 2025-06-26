@@ -1,4 +1,5 @@
-package demoqa.api.requests.authorization;
+package demoqa.api.models;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
@@ -8,6 +9,7 @@ public class AuthResponseDto {
     private String password;
     private String token;
     private String expires;
-    private String created_date;
+    @JsonProperty("created_date")
+    private String createdDate;
     private Boolean isActive;
 }

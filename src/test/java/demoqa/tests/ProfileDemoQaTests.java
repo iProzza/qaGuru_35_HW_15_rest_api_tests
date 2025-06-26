@@ -1,14 +1,13 @@
 package demoqa.tests;
 
-import demoqa.api.requests.authorization.AuthResponseDto;
-import demoqa.api.requests.authorization.AuthorizationApi;
-import demoqa.api.requests.crud.GetAccountUserBooksByIdResponseDto;
-import demoqa.api.requests.crud.Requests;
+import demoqa.api.models.AuthResponseDto;
+import demoqa.api.requests.AccountRequests;
+import demoqa.api.models.GetAccountUserBooksByIdResponseDto;
+import demoqa.api.requests.BookStoreRequests;
 import demoqa.helpers.WithLogin;
 import demoqa.pages.ModalPage;
 import demoqa.pages.ProfilePage;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Selenide.open;
@@ -16,12 +15,12 @@ import static io.qameta.allure.Allure.step;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-@Tag("all_api")
 public class ProfileDemoQaTests extends BaseTest {
 
     ProfilePage profilePage = new ProfilePage();
     ModalPage modalPage = new ModalPage();
-    Requests requests = new Requests();
+    BookStoreRequests bookStoreRequests = new BookStoreRequests();
+    AccountRequests accountRequests = new AccountRequests();
 
     @Test
     @WithLogin
@@ -29,23 +28,23 @@ public class ProfileDemoQaTests extends BaseTest {
     void shouldDisplayEmptyBookListAfterDeletionTest() {
 
         AuthResponseDto authResponseModel = step("Авторизация через API", () ->
-                AuthorizationApi.authorize()
+                AccountRequests.authorize()
         );
 
 
         String userId = authResponseModel.getUserId();
 
         step("Удаление всех книг в списке", () ->
-                requests.deleteAllBooksFromProfileById(userId)
+                bookStoreRequests.deleteAllBooksFromProfileById(userId)
         );
 
         step("Проверка пустого списка через API", () -> {
-            GetAccountUserBooksByIdResponseDto response = requests.getAccountUserBooksById(userId);
+            GetAccountUserBooksByIdResponseDto response = accountRequests.getAccountUserBooksById(userId);
             assertThat(response.getBooks()).isEmpty();
         });
 
         step("Добавление тестовой книги", () ->
-                requests.addBookToProfile(userId, "9781449325862")
+                bookStoreRequests.addBookToProfile(userId, "9781449325862")
         );
 
         step("Открытие страницы профиля", () ->
@@ -66,7 +65,7 @@ public class ProfileDemoQaTests extends BaseTest {
         );
 
         step("Проверка пустого списка через API", () -> {
-            GetAccountUserBooksByIdResponseDto response = requests.getAccountUserBooksById(userId);
+            GetAccountUserBooksByIdResponseDto response = accountRequests.getAccountUserBooksById(userId);
             assertThat(response.getBooks())
                     .as("Проверка, что список книг пуст после удаления")
                     .isEmpty();

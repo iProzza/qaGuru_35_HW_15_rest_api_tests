@@ -1,7 +1,7 @@
 package demoqa.helpers;
 
-import demoqa.api.requests.authorization.AuthResponseDto;
-import demoqa.api.requests.authorization.AuthorizationApi;
+import demoqa.api.models.AuthResponseDto;
+import demoqa.api.requests.AccountRequests;
 import io.qameta.allure.Step;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -23,7 +23,7 @@ public class LoginExtension implements BeforeEachCallback {
 
     @Step("Авторизация через API и установка cookies")
     private void authorizeAndSetCookies() {
-        AuthResponseDto auth = AuthorizationApi.authorize();
+        AuthResponseDto auth = AccountRequests.authorize();
 
         open("/favicon.ico"); 
 
