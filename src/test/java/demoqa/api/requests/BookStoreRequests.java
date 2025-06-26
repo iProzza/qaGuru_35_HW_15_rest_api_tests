@@ -3,7 +3,7 @@ package demoqa.api.requests;
 import demoqa.api.specs.DefaultRequestSpec;
 
 import static demoqa.api.EndPoints.BOOKSTORE_BOOKS;
-import static demoqa.api.specs.CrudResponseSpecs.*;
+import static demoqa.api.specs.CrudResponseSpecs.defaultResponseSpec;
 import static io.restassured.RestAssured.given;
 import static java.lang.String.format;
 
@@ -18,7 +18,7 @@ public class BookStoreRequests extends DefaultRequestSpec {
                 .when()
                 .post(BOOKSTORE_BOOKS)
                 .then()
-                .spec(addBookToProfileResponseSpec201);
+                .spec(defaultResponseSpec(201));
     }
 
 
@@ -29,7 +29,7 @@ public class BookStoreRequests extends DefaultRequestSpec {
                 .when()
                 .delete(BOOKSTORE_BOOKS)
                 .then()
-                .spec(deleteAllBooksFromProfileByIdResponseSpec204);
+                .spec(defaultResponseSpec(204));
     }
 }
 

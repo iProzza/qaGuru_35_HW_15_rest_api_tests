@@ -6,7 +6,7 @@ import demoqa.api.models.GetAccountUserBooksByIdResponseDto;
 
 import static demoqa.api.EndPoints.ACCOUNT_LOGIN;
 import static demoqa.api.EndPoints.ACCOUNT_USER;
-import static demoqa.api.specs.CrudResponseSpecs.getAccountUserBooksByIdResponseSpec200;
+import static demoqa.api.specs.CrudResponseSpecs.defaultResponseSpec;
 import demoqa.api.specs.DefaultRequestSpec;
 
 import static demoqa.helpers.TestData.LOGIN;
@@ -42,7 +42,7 @@ public class AccountRequests extends DefaultRequestSpec {
                 .when()
                 .get(ACCOUNT_USER + "/" + userId)
                 .then()
-                .spec(getAccountUserBooksByIdResponseSpec200)
+                .spec(defaultResponseSpec(200))
                 .extract()
                 .as(GetAccountUserBooksByIdResponseDto.class);
     }

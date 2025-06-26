@@ -21,38 +21,20 @@ public class BaseTest {
 
     @BeforeAll
     static void setup() {
-
-        String selenoidHost = System.getProperty("selenoid_host", "selenoid.autotests.cloud");
-        String selenoidLogin = System.getProperty("selenoid_login", "user1");
-        String selenoidPassword = System.getProperty("selenoid_password", "1234");
-        String browser = System.getProperty("browser", "chrome");
-        String browserVersion = System.getProperty("browserVersion", "127.0");
-        String screenResolution = System.getProperty("screenResolution", "1920x1080");
-
-        WebDriverManager.chromedriver()
-                .clearDriverCache()
-                .clearResolutionCache()
-                .setup();
+//        WebDriverManager.chromedriver()
+//                .clearDriverCache()
+//                .clearResolutionCache()
+//                .setup();
 
         Configuration.baseUrl = "https://demoqa.com";
-        Configuration.browserSize = screenResolution;
-        Configuration.browser = browser;
-        Configuration.browserVersion = browserVersion;
+        Configuration.browserSize = System.getProperty("screenResolution", "1920x1080");
+        Configuration.browser = System.getProperty("browser", "chrome");
+        Configuration.browserVersion = System.getProperty("browserVersion", "127.0");
         Configuration.pageLoadStrategy = "eager";
         Configuration.timeout = 10000;
-        Configuration.remote = String.format("https://%s:%s@%s/wd/hub",
-                selenoidLogin,
-                selenoidPassword,
-                selenoidHost);
-        RestAssured.baseURI = "https://demoqa.com";
 
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("selenoid:options", Map.<String, Object>of(
-                "enableVNC", true,
-                "enableVideo", true
-        ));
-        Configuration.browserCapabilities = capabilities;
-
+        // Настройки для Selenoid (только если указан selenoid_host)
+        configureSelenoidIfNeeded();
     }
 
     @BeforeEach
@@ -64,8 +46,31 @@ public class BaseTest {
     void shutDown() {
         Attach.screenshotAs("Last screenshot");
         Attach.pageSource();
-        Attach.browserConsoleLogs();
-        Attach.addVideo();
+        // Добавляем логи и видео только для удалённого запуска
+        if (Configuration.remote != null) {
+            Attach.browserConsoleLogs();
+            Attach.addVideo();
+        }
         closeWebDriver();
+    }
+
+    private static void configureSelenoidIfNeeded() {
+        String selenoidHost = System.getProperty("selenoid_host");
+        if (selenoidHost != null && !selenoidHost.isEmpty()) {
+            String selenoidLogin = System.getProperty("selenoid_login", "user1");
+            String selenoidPassword = System.getProperty("selenoid_password", "1234");
+
+            Configuration.remote = String.format("https://%s:%s@%s/wd/hub",
+                    selenoidLogin,
+                    selenoidPassword,
+                    selenoidHost);
+
+            DesiredCapabilities capabilities = new DesiredCapabilities();
+            capabilities.setCapability("selenoid:options", Map.of(
+                    "enableVNC", true,
+                    "enableVideo", true
+            ));
+            Configuration.browserCapabilities = capabilities;
+        }
     }
 }
