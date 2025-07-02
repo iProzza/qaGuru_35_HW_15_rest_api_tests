@@ -40,12 +40,14 @@ dependencies {
             "org.aspectj:aspectjweaver:$aspectjweaverVersion",
             'org.slf4j:slf4j-simple:2.0.9',
             'org.assertj:assertj-core:3.24.2',
+            'org.aeonbits.owner:owner:1.0.4',
 
             "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion",
             "com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion",
             "com.fasterxml.jackson.core:jackson-core:$jacksonVersion",
             "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion"
     )
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
 }
 
 tasks.withType(JavaCompile) {
