@@ -8,6 +8,9 @@ import static demoqa.api.EndPoints.ACCOUNT_LOGIN;
 import static demoqa.api.EndPoints.ACCOUNT_USER;
 import static demoqa.api.specs.CrudResponseSpecs.defaultResponseSpec;
 import demoqa.api.specs.DefaultRequestSpec;
+import demoqa.config.ConfigReader;
+import demoqa.config.WebConfig;
+import io.restassured.RestAssured;
 
 import static demoqa.helpers.TestData.LOGIN;
 import static demoqa.helpers.TestData.PASSWORD;
@@ -15,6 +18,12 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 
 public class AccountRequests extends DefaultRequestSpec {
+
+    private static final WebConfig config = ConfigReader.getInstance();
+
+    static {
+        RestAssured.baseURI = config.baseUrl(); // Устанавливаем базовый URL для ВСЕХ запросов
+    }
 
     //Логинимся через апи
     public static AuthResponseDto authorize() {
