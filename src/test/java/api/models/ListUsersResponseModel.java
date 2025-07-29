@@ -28,7 +28,4 @@ public class ListUsersResponseModel {
         private String url;
         private String text;
     }
-
-
-
 }

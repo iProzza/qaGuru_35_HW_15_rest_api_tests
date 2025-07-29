@@ -3,7 +3,10 @@ package api.tests;
 import api.models.SingleUserResponseModel;
 import api.models.UserRequestModel;
 import api.models.ListUsersResponseModel;
-import api.models.crudUserResponseModel;
+import api.models.CrudUserResponseModel;
+import io.qameta.allure.Owner;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -15,9 +18,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 @Tag("all_api")
+@Owner("@Azkeww")
 public class ReqresTests extends BaseTest {
 
     @Test
+    @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Получение списка пользователей")
     void usersListTest() {
         ListUsersResponseModel response = step("Get users list", () ->
@@ -39,6 +44,7 @@ public class ReqresTests extends BaseTest {
     }
 
     @Test
+    @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Получение данных конкретного пользователя")
     void singleUserTest() {
         SingleUserResponseModel response = step("Get user by ID", () ->
@@ -62,6 +68,7 @@ public class ReqresTests extends BaseTest {
     }
 
     @Test
+    @Severity(SeverityLevel.BLOCKER)
     @DisplayName("Создание нового пользователя")
     void createUserTest() {
         UserRequestModel request = step("Prepare request data", () ->
@@ -70,7 +77,7 @@ public class ReqresTests extends BaseTest {
                         .job("leader")
                         .build());
 
-        crudUserResponseModel response = step("Create user", () ->
+        CrudUserResponseModel response = step("Create user", () ->
                 given(crudUserRequestSpec)
                         .body(request)
                         .when()
@@ -78,7 +85,7 @@ public class ReqresTests extends BaseTest {
                         .then()
                         .spec(createUserResponseSpec201)
                         .extract()
-                        .as(crudUserResponseModel.class));
+                        .as(CrudUserResponseModel.class));
 
         step("Verify response", () -> {
             assertThat(response.getName()).isEqualTo(request.getName());
@@ -93,6 +100,7 @@ public class ReqresTests extends BaseTest {
     }
 
     @Test
+    @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Частичное обновление пользователя (PATCH)")
     void updateUserPatchMethodTest() {
         UserRequestModel request = step("Prepare update data", () ->
@@ -101,7 +109,7 @@ public class ReqresTests extends BaseTest {
                         .job("the one")
                         .build());
 
-        crudUserResponseModel response = step("Update user with PATCH", () ->
+        CrudUserResponseModel response = step("Update user with PATCH", () ->
                 given(crudUserRequestSpec)
                         .pathParam("id", 2)
                         .body(request)
@@ -110,7 +118,7 @@ public class ReqresTests extends BaseTest {
                         .then()
                         .spec(updateUserResponseSpec200)
                         .extract()
-                        .as(crudUserResponseModel.class));
+                        .as(CrudUserResponseModel.class));
 
         step("Verify update results", () -> {
             assertThat(response.getName()).isEqualTo(request.getName());
@@ -119,6 +127,7 @@ public class ReqresTests extends BaseTest {
     }
 
     @Test
+    @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Полное обновление пользователя (PUT)")
     void updateUserPutMethodTest() {
         UserRequestModel request = step("Prepare update data", () ->
@@ -127,7 +136,7 @@ public class ReqresTests extends BaseTest {
                         .job("the one")
                         .build());
 
-        crudUserResponseModel response = step("Update user with PUT", () ->
+        CrudUserResponseModel response = step("Update user with PUT", () ->
                 given(crudUserRequestSpec)
                         .pathParam("id", 2)
                         .body(request)
@@ -136,7 +145,7 @@ public class ReqresTests extends BaseTest {
                         .then()
                         .spec(updateUserResponseSpec200)
                         .extract()
-                        .as(crudUserResponseModel.class));
+                        .as(CrudUserResponseModel.class));
 
         step("Verify update results", () -> {
             assertThat(response.getName()).isEqualTo(request.getName());
@@ -145,6 +154,7 @@ public class ReqresTests extends BaseTest {
     }
 
     @Test
+    @Severity(SeverityLevel.BLOCKER)
     @DisplayName("Удаление пользователя")
     void deleteUserTest() {
         step("Delete user", () ->

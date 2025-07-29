@@ -3,6 +3,6 @@ package api.models;
 import lombok.Data;
 
 @Data
-public class crudUserResponseModel {
+public class CrudUserResponseModel {
     String name, job, id, createdAt, updatedAt;
 }
