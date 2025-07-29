@@ -109,12 +109,6 @@ clean ${TASK}
 <img src="images/screens/allure_report_1.png" width="800" alt="Allure">
 
 ### Пример отчета о выполнении тестов
-Содержит в себе:
-- Шаги теста
-- Скриншот страницы на последнем шаге
-- Page Source
-- Логи браузерной консоли
-- Видео прогона автотестов
 <img src="images/screens/allure_report_2.png" width="800" alt="Allure">
 
 ### Графики
