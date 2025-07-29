@@ -43,21 +43,9 @@
         </a>
         <br>Gradle
       </td>
-      <td align="center" width="110">
-        <a href="https://selenide.org/" target="_blank">
-          <img src="https://selenide.org/images/selenide-logo.png" width="48" height="48" alt="Selenide" />
-        </a>
-        <br>Selenide
-      </td>
     </tr>
     <tr>
       <!-- Вторая строка -->
-      <td align="center" width="110">
-        <a href="https://aerokube.com/selenoid/" target="_blank">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" width="48" height="48" alt="Selenoid" />
-        </a>
-        <br>Selenoid
-      </td>
       <td align="center" width="110">
         <a href="https://docs.qameta.io/allure/" target="_blank">
           <img src="https://avatars.githubusercontent.com/u/5879127?s=200&v=4" width="48" height="48" alt="Allure" />
