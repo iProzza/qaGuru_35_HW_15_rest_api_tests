@@ -1,6 +1,6 @@
 <p align="center">
-  <a href="https://loylabs.ru/" target="_blank">
-    <img src="media/screens/Logo.png" width="200" alt="LoyLabs Logo">
+  <a href="https://reqres.in/" target="_blank">
+    <img src="images/screens/reqres_in_logo.png" width="200" alt="LoyLabs Logo">
   </a>
 </p>
 
@@ -98,7 +98,7 @@
 - ✅ Удаление пользователя
 ---
 
-## [<img src="media/logo/Jenkins.svg" width="40" height="40" alt="Jenkins"> Запуск тестов в Jenkins](https://jenkins.autotests.cloud/job/035-Azkeww-hw14/)
+## [<img src="images/logo/Jenkins.svg" width="40" height="40" alt="Jenkins"> Запуск тестов в Jenkins](https://jenkins.autotests.cloud/job/035-Azkeww-hw16/)
 
 ### Локальный запуск
 ```bash
@@ -114,10 +114,10 @@ clean ${TASK}
 
 
 
-## [<img src="media/logo/Allure_Report.svg" width="40" height="40" alt="Allure"> Allure-отчет](https://jenkins.autotests.cloud/job/035-Azkeww-hw14/35/allure/)
+## [<img src="images/logo/Allure_Report.svg" width="40" height="40" alt="Allure"> Allure-отчет](https://jenkins.autotests.cloud/job/035-Azkeww-hw16/4/allure/)
 
 ### Главная страница Allure-отчета
-<img src="media/screens/allure_report_1.png" width="800" alt="Allure">
+<img src="images/screens/allure_report_1.png" width="800" alt="Allure">
 
 ### Пример отчета о выполнении тестов
 Содержит в себе:
@@ -126,18 +126,18 @@ clean ${TASK}
 - Page Source
 - Логи браузерной консоли
 - Видео прогона автотестов
-<img src="media/screens/allure_report_2.png" width="800" alt="Allure">
+<img src="images/screens/allure_report_2.png" width="800" alt="Allure">
 
 ### Графики
-<img src="media/screens/allure_report_3.png" width="800" alt="Allure">
-<img src="media/screens/allure_report_4.png" width="800" alt="Allure">
+<img src="images/screens/allure_report_3.png" width="800" alt="Allure">
+<img src="images/screens/allure_report_4.png" width="800" alt="Allure">
 
-## <img src="media/logo/Telegram.svg" width="40" height="40" alt="Telegram"> Уведомления в Telegram
+## <img src="images/logo/Telegram.svg" width="40" height="40" alt="Telegram"> Уведомления в Telegram
 
 ### После завершения сборки, бот, созданный в Telegram, автоматически обрабатывает и отправляет сообщение с результатом
 
 <p align="center">
-<img src="media/screens/tg_notification.png" width="600" alt="Allure">
+<img src="images/screens/tg_notification.png" width="600" alt="Allure">
 </p>
 
 
