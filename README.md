@@ -102,7 +102,7 @@ clean ${TASK}
 
 
 
-## [<img src="images/logo/Allure_Report.svg" width="40" height="40" alt="Allure"> Allure-отчет](https://jenkins.autotests.cloud/job/035-Azkeww-hw16/4/allure/)
+## [<img src="images/logo/Allure.svg" width="40" height="40" alt="Allure"> Allure-отчет](https://jenkins.autotests.cloud/job/035-Azkeww-hw16/4/allure/)
 
 ### Главная страница Allure-отчета
 <img src="images/screens/allure_report_1.png" width="800" alt="Allure">
