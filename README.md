@@ -87,6 +87,7 @@
 ---
 
 ## [<img src="images/logo/Jenkins.svg" width="40" height="40" alt="Jenkins"> Запуск тестов в Jenkins](https://jenkins.autotests.cloud/job/035-Azkeww-hw16/)
+<img src="images/screens/jenkins.png" width="800" alt="Allure">
 
 ### Локальный запуск
 ```bash
