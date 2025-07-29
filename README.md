@@ -126,7 +126,7 @@ clean ${TASK}
 ### После завершения сборки, бот, созданный в Telegram, автоматически обрабатывает и отправляет сообщение с результатом
 
 <p align="center">
-<img src="images/screens/tg_notification.png" width="600" alt="Allure">
+<img src="images/screens/tg_notifications.png" width="600" alt="Allure">
 </p>
 
 
