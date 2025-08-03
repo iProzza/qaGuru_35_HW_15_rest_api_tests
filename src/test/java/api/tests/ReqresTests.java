@@ -25,7 +25,7 @@ public class ReqresTests extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Получение списка пользователей")
     void usersListTest() {
-        ListUsersResponseModel response = step("Get users list", () ->
+        ListUsersResponseModel response = step("Получить список пользователей", () ->
                 given()
                         .queryParam("page", 2)
                         .when()
@@ -35,10 +35,10 @@ public class ReqresTests extends BaseTest {
                         .extract()
                         .as(ListUsersResponseModel.class));
 
-        step("Check response data", () -> {
+        step("Проверка ответа", () -> {
             assertThat(response.getPage()).isEqualTo(2);
             assertThat(response.getData())
-                    .as("User list should not be empty")
+                    .as("Список пользователей не должен быть пустым")
                     .isNotEmpty();
         });
     }
@@ -47,9 +47,8 @@ public class ReqresTests extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Получение данных конкретного пользователя")
     void singleUserTest() {
-        SingleUserResponseModel response = step("Get user by ID", () ->
+        SingleUserResponseModel response = step("Получаем пользователя по ID", () ->
                 given()
-                        .header("x-api-key", API_KEY)
                         .pathParam("id", 2)
                         .when()
                         .get(USER_BY_ID_PATH)
@@ -58,10 +57,10 @@ public class ReqresTests extends BaseTest {
                         .extract()
                         .as(SingleUserResponseModel.class));
 
-        step("Check user data", () -> {
+        step("Проверка ответа", () -> {
             assertThat(response.getData().getId()).isEqualTo(2);
             assertThat(response.getData().getEmail())
-                    .as("Email should contain @ and . symbols")
+                    .as("Email должен содержать @ и . символы")
                     .contains("@")
                     .contains(".");
         });
@@ -71,13 +70,13 @@ public class ReqresTests extends BaseTest {
     @Severity(SeverityLevel.BLOCKER)
     @DisplayName("Создание нового пользователя")
     void createUserTest() {
-        UserRequestModel request = step("Prepare request data", () ->
+        UserRequestModel request = step("Подготовока данных для запроса", () ->
                 UserRequestModel.builder()
                         .name("morpheus")
                         .job("leader")
                         .build());
 
-        CrudUserResponseModel response = step("Create user", () ->
+        CrudUserResponseModel response = step("Создаем пользователя", () ->
                 given(crudUserRequestSpec)
                         .body(request)
                         .when()
@@ -87,14 +86,14 @@ public class ReqresTests extends BaseTest {
                         .extract()
                         .as(CrudUserResponseModel.class));
 
-        step("Verify response", () -> {
+        step("Проверка ответа", () -> {
             assertThat(response.getName()).isEqualTo(request.getName());
             assertThat(response.getJob()).isEqualTo(request.getJob());
             assertThat(response.getId())
-                    .as("User ID should not be null")
+                    .as("ID пользователя не должно быть null")
                     .isNotNull();
             assertThat(response.getCreatedAt())
-                    .as("Creation date should follow ISO pattern")
+                    .as("Созданная дата должна соответствовать ISO шаблону")
                     .matches("\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z");
         });
     }
@@ -103,13 +102,13 @@ public class ReqresTests extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Частичное обновление пользователя (PATCH)")
     void updateUserPatchMethodTest() {
-        UserRequestModel request = step("Prepare update data", () ->
+        UserRequestModel request = step("Подготовока данных для запроса", () ->
                 UserRequestModel.builder()
                         .name("neo")
                         .job("the one")
                         .build());
 
-        CrudUserResponseModel response = step("Update user with PATCH", () ->
+        CrudUserResponseModel response = step("Обновляем пользователя методом PATCH", () ->
                 given(crudUserRequestSpec)
                         .pathParam("id", 2)
                         .body(request)
@@ -120,7 +119,7 @@ public class ReqresTests extends BaseTest {
                         .extract()
                         .as(CrudUserResponseModel.class));
 
-        step("Verify update results", () -> {
+        step("Проверка ответа", () -> {
             assertThat(response.getName()).isEqualTo(request.getName());
             assertThat(response.getJob()).isEqualTo(request.getJob());
         });
@@ -130,13 +129,13 @@ public class ReqresTests extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Полное обновление пользователя (PUT)")
     void updateUserPutMethodTest() {
-        UserRequestModel request = step("Prepare update data", () ->
+        UserRequestModel request = step("Подготовока данных для запроса", () ->
                 UserRequestModel.builder()
                         .name("neo")
                         .job("the one")
                         .build());
 
-        CrudUserResponseModel response = step("Update user with PUT", () ->
+        CrudUserResponseModel response = step("Обновляем пользователя методом PUT", () ->
                 given(crudUserRequestSpec)
                         .pathParam("id", 2)
                         .body(request)
@@ -147,7 +146,7 @@ public class ReqresTests extends BaseTest {
                         .extract()
                         .as(CrudUserResponseModel.class));
 
-        step("Verify update results", () -> {
+        step("Проверка ответа", () -> {
             assertThat(response.getName()).isEqualTo(request.getName());
             assertThat(response.getJob()).isEqualTo(request.getJob());
         });
@@ -157,7 +156,7 @@ public class ReqresTests extends BaseTest {
     @Severity(SeverityLevel.BLOCKER)
     @DisplayName("Удаление пользователя")
     void deleteUserTest() {
-        step("Delete user", () ->
+        step("Удаляем пользователя", () ->
                 given(crudUserRequestSpec)
                         .pathParam("id", 2)
                         .when()
