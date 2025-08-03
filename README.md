@@ -64,6 +64,12 @@
         </a>
         <br>GitHub
       </td>
+      <td align="center" width="110">
+        <a href="https://rest-assured.io/" target="_blank">
+          <img src="https://rest-assured.io/img/logo-transparent.png" width="48" height="48" alt="Rest-Assured" />
+        </a>
+        <br>Rest-Assured
+      </td>
     </tr>
   </table>
 </div>
